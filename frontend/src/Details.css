@@ -1,0 +1,57 @@
+.Book-image{
+    height: 320px;
+    width: 380px;
+    overflow: hidden;
+}
+.Book-image img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+.BookDetails{
+    height: 520px;
+    width: 880px;
+    background-color:#242424;
+    border-radius: 20px;
+    display: flex;
+}
+.left ,.right{
+    margin: 20px;
+}
+.right{
+    position: relative;
+    width: 50%;
+    height: 90%;
+    margin-top: 55px;
+}
+.Dusername{
+    font-size: 1.3rem;
+    font-weight: 550;
+}
+.Ddate{
+    margin-bottom: 30px;
+    color: #777;
+    font-size: 13px;
+}
+.dtitle{
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 50px ;
+}
+.dsummary,.dreview{
+    margin-bottom: 30px;
+}
+.dauthor{
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    margin-bottom: 25px;
+}
+
+.booook{
+    color:white;
+    background-color: #777;
+    width: 200px;
+    height: 200px;
+}
