@@ -28,19 +28,17 @@ function isAuth_creat(req, res, next) {
     next();
 }
 
-function isAuth_delete(req, res, next) {
+function isAuth_delete(req,res,next) {
   const email = req.headers.useremail;
   const username = req.headers.username;
   const sessionUser = req.session.user;
-  console.log('asfadfasfasdfadsffa',sessionUser)
-  console.log('asfadfasfasdfadsdlsdf;alskdfsakfffa',email,username)
-  
-
-  if (!sessionUser || sessionUser.email !== email || sessionUser.username !== username) {
+  console.log(email,username,"klk;k;k;lk';k;;klk;")
+  if (!sessionUser||sessionUser.email != email || sessionUser.username != username) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
-
-  next();
+  console.log("klk;k;k;lk';k;;klk;")
+  // return res.status(200)
+  next()
 }
 
 

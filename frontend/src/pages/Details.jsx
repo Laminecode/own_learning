@@ -6,27 +6,32 @@ function Details() {
   const location = useLocation();
   const { id } = useParams();
   const navigate = useNavigate();
-  const Book = location.state?.Book; 
-  const [deletebtn,setdelete] = useState(false)
+  const Book = location.state?.Book;
+  const [deletebtn, setDelete] = useState(false);
 
-  // useEffect(async() => {
-  //   try {
-  //     await axios.post(`http://localhost:4300/post/isAuth`, {
-  //       headers: {
-  //         userEmail: Book.UserEmail,
-  //         username: Book.username,
-  //       },
-  //     });
-  //     setdelete(true)
-  //   } catch (err) {
-  //     console.error('Error deleting post:', err);
-  //   }
-  // }, []);
-
+  useEffect(() => {
+    if (!Book) return;
+  
+    // Remove any extra quotes or spaces from the stored email
+    let user = localStorage.getItem('user');
+    user = user ? user.replace(/^"|"$/g, '').trim().toLowerCase() : ''; // Clean up extra quotes
+  
+    const bookEmail = Book.UserEmail?.trim().toLowerCase();
+  
+    console.log(`User: "${user}", Book Email: "${bookEmail}"`);
+  
+    if (user === bookEmail) {
+      console.log('User matches, enabling delete button.');
+      setDelete(true);
+    } else {
+      console.warn('User does not match the book email.');
+    }
+  }, [Book]);
+  
   const deletePost = async () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this post?');
     if (!confirmDelete) return;
-  
+
     try {
       const response = await axios.delete(`http://localhost:4300/post/delete/${id}`, {
         headers: {
@@ -34,24 +39,19 @@ function Details() {
           username: Book.username,
         },
       });
-  
+
       if (response.status === 200) {
         alert('Post deleted successfully!');
         navigate('/Books');
       }
     } catch (err) {
       console.error('Error deleting post:', err);
-  
-      // Display the error message from the backend, if available
-      if (err.response && err.response.data) {
-        alert(`Error: ${err.response.data.message}`);
-      } else {
-        alert('An error occurred while deleting the post.');
-      }
+      const errorMessage = err.response?.data?.message || 'An error occurred while deleting the post.';
+      alert(`Error: ${errorMessage}`);
     }
   };
 
-  if (!Book) return null; 
+  if (!Book) return <p>Loading book details...</p>;
 
   return (
     <div className="BookDetails">
@@ -75,9 +75,11 @@ function Details() {
         <div className="dreview">{Book.review}</div>
         <div className="dauthor"><strong>Author:</strong> {Book.author}</div>
 
-        <button className="delete-button" onClick={deletePost}>
-          Delete Post
-        </button>
+        {deletebtn && (
+          <button className="delete-button" onClick={deletePost}>
+            Delete Post
+          </button>
+        )}
       </div>
     </div>
   );

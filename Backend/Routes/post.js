@@ -13,11 +13,12 @@ const storage = {
 };
 
 // router.use(isAuth);
+
 router.get('/get_all', get_all_post);
 router.post('/create', formidableMiddleware({ uploadDir: './BookImage', keepExtensions: true }), isAuth_creat, create_Poste);
-router.put('/update/:id', update_Poste);
 router.post('/isAuth',isAuth_delete);
-router.delete('/delete/:id',isAuth_delete , delete_post);
+router.put('/update/:id', update_Poste);
+router.delete('/delete/:id',isAuth_delete,delete_post);
 router.get('/getTitle/:Title', find_by_title);
 router.get('/userpost/:email',get_user_posts)
 
